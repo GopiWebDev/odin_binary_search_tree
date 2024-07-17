@@ -24,7 +24,40 @@ class Tree {
   constructor(arr) {
     this.root = buildTree(arr);
   }
+
+  insert(value) {
+    let newNode = new Node(value);
+
+    if (this.root === null) {
+      this.root = newNode;
+      return this;
+    }
+
+    let current = this.root;
+
+    while (true) {
+      if (value < current.val) {
+        if (current.left === null) {
+          current.left = newNode;
+          break;
+        }
+        current = current.left;
+      } else if (value > current.val) {
+        if (current.right === null) {
+          current.right = newNode;
+          break;
+        }
+        current = current.right;
+      } else {
+        break;
+      }
+    }
+    return this;
+  }
+
+  deleteItem(value) {}
 }
 
 let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const tree = new Tree(array);
+console.log(tree);
