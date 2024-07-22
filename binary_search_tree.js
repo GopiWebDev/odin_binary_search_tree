@@ -89,6 +89,24 @@ class Tree {
     }
     return false;
   }
+
+  find(value) {
+    if (this.root === null) return false;
+
+    let current = this.root;
+    let found = false;
+
+    while (current && !found) {
+      if (value > current.val) {
+        current = current.left;
+      } else if (value < current.val) {
+        current = current.right;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
