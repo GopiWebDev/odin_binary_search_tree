@@ -8,21 +8,21 @@ class Node {
 
 // function to build a balanced BST
 
-function buildTree(arr, start = 0, end = arr.length - 1) {
-  if (start > end) return null;
-
-  let mid = Math.floor((start + end) / 2);
-  const node = new Node(arr[mid]);
-
-  node.left = buildTree(arr, start, mid - 1);
-  node.right = buildTree(arr, mid + 1, end);
-
-  return node;
-}
-
 class Tree {
   constructor(arr) {
-    this.root = buildTree(arr);
+    this.root = this.buildTree(arr);
+  }
+
+  buildTree(arr, start = 0, end = arr.length - 1) {
+    if (start > end) return null;
+
+    let mid = Math.floor((start + end) / 2);
+    const node = new Node(arr[mid]);
+
+    node.left = this.buildTree(arr, start, mid - 1);
+    node.right = this.buildTree(arr, mid + 1, end);
+
+    return node;
   }
 
   insert(value) {
@@ -107,6 +107,33 @@ class Tree {
     }
     return false;
   }
+
+  levelOrder(callback) {
+    if (!this.root) return [];
+
+    let queue = [];
+    let result = [];
+
+    queue.push(this.root);
+
+    while (queue.length !== 0) {
+      const node = queue.shift();
+      result.push(node.val);
+
+      if (callback) callback(node);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+
+    if (!callback) throw new Error('Callback not provided');
+    return result;
+  }
+
+  inOrder(callback) {}
+
+  preOrder(callback) {}
+
+  postOrder(callback) {}
 }
 
 let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
