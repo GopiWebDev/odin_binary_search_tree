@@ -129,11 +129,81 @@ class Tree {
     return result;
   }
 
-  inOrder(callback) {}
+  inOrder(callback) {
+    let data = [];
+    let current = this.root;
 
-  preOrder(callback) {}
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      callback(node.val);
+      data.push(node.val);
+      if (node.right) traverse(node.right);
+    }
 
-  postOrder(callback) {}
+    traverse(current);
+    if (!callback) throw new Error('Callback not provided');
+    return data;
+  }
+
+  preOrder(callback) {
+    let data = [];
+    let current = this.root;
+
+    function traverse(node) {
+      callback(node.val);
+      data.push(node.val);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(current);
+    if (!callback) throw new Error('Callback not provided');
+    return data;
+  }
+
+  postOrder(callback) {
+    let data = [];
+    let current = this.root;
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      callback(node.val);
+      data.push(node.val);
+    }
+
+    traverse(current);
+    if (!callback) throw new Error('Callback not provided');
+    return data;
+  }
+
+  height(node) {
+    if (node === null) return -1;
+
+    let leftNode = this.height(node.left);
+    let rightNode = this.height(node.right);
+
+    return Math.max(leftNode, rightNode) + 1;
+  }
+
+  depth(node) {
+    let depth = 0;
+    let current = node;
+
+    while (current !== this.root) {
+      if (node.val < current.val) {
+        current = current.left;
+      } else if (node.val > current.val) {
+        current = current.right;
+      }
+      depth++;
+    }
+    return depth;
+  }
+
+  isBalanced(){
+    
+  }
 }
 
 let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
