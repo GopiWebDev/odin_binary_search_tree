@@ -10,7 +10,11 @@ class Node {
 
 class Tree {
   constructor(arr) {
-    this.root = this.buildTree(arr);
+    if (arr) {
+      this.root = this.buildTree(arr);
+    } else {
+      this.root = null;
+    }
   }
 
   buildTree(arr, start = 0, end = arr.length - 1) {
@@ -178,7 +182,7 @@ class Tree {
   }
 
   height(node) {
-    if (node === null) return -1;
+    if (node === null) return 0;
 
     let leftNode = this.height(node.left);
     let rightNode = this.height(node.right);
@@ -188,9 +192,9 @@ class Tree {
 
   depth(node) {
     let depth = 0;
-    let current = node;
+    let current = this.root;
 
-    while (current !== this.root) {
+    while (current !== null && current !== node) {
       if (node.val < current.val) {
         current = current.left;
       } else if (node.val > current.val) {
@@ -198,14 +202,35 @@ class Tree {
       }
       depth++;
     }
+
+    if (current === null) {
+      throw new Error('Node not found');
+    }
     return depth;
   }
 
-  isBalanced(){
-    
+  isBalanced(root = this.root) {
+    if (root === null) return true;
+
+    let left = this.height(root.left);
+    let right = this.height(root.right);
+
+    if (
+      Math.abs(left - right) <= 1 &&
+      this.isBalanced(root.left) &&
+      this.isBalanced(root.right)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 }
 
-let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const tree = new Tree(array);
-console.log(tree);
+const tree = new Tree();
+tree.insert(1);
+tree.insert(2);
+tree.insert(3);
+tree.insert(4);
+tree.insert(5);
+tree.insert(6);
