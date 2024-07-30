@@ -225,12 +225,63 @@ class Tree {
 
     return false;
   }
+
+  rebalance() {
+    let sortedArray = this.inOrder(function () {});
+    this.root = this.buildTree(sortedArray);
+    return this;
+  }
 }
 
-const tree = new Tree();
-tree.insert(1);
-tree.insert(2);
-tree.insert(3);
-tree.insert(4);
-tree.insert(5);
-tree.insert(6);
+// Create a binary search tree from an array of random numbers < 100.
+const randomNumbers = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+  22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+  41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+  60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+  79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
+  98,
+];
+const tree = new Tree(randomNumbers);
+// Confirm that the tree is balanced by calling isBalanced.
+console.log('Is the tree balanced?');
+console.log(tree.isBalanced()); // true
+
+// Print out all elements in level, pre, post, and in order.
+console.log('Print all elements in levelOrder');
+console.log(tree.levelOrder(function () {}));
+
+console.log('Print all elements in preOrder');
+console.log(tree.preOrder(function () {}));
+
+console.log('Print all elements in postOrder');
+console.log(tree.postOrder(function () {}));
+
+console.log('Print all elements in inOrder');
+console.log(tree.inOrder(function () {}));
+
+// Unbalance the tree by adding several numbers > 100.
+tree.insert(100);
+tree.insert(101);
+
+console.log('Added 2 more numbers to unbalance the tree');
+console.log('Is the tree balanced now?');
+console.log(tree.isBalanced());
+
+// Balance the tree by calling rebalance.
+tree.rebalance();
+
+console.log('Called rebalance function. Is the tree balanced now?');
+console.log(tree.isBalanced());
+// Print out all elements in level, pre, post, and in order.
+console.log('Print all elements in levelOrder');
+console.log(tree.levelOrder(function () {}));
+
+console.log('Print all elements in preOrder');
+console.log(tree.preOrder(function () {}));
+
+console.log('Print all elements in postOrder');
+console.log(tree.postOrder(function () {}));
+
+console.log('Print all elements in inOrder');
+console.log(tree.inOrder(function () {}));
